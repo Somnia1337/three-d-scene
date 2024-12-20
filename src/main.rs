@@ -266,19 +266,12 @@ pub async fn run() {
     ];
 
     // 构建彩色立方体
-    let cube = Program::from_source(
-        &context,
-        include_str!("cube.vert"),
-        include_str!("cube.frag"),
-    )
-    .unwrap();
     let cube_cpu = CpuMesh {
         positions: Positions::F32(positions),
         indices: Indices::U32(indices),
         colors: Some(colors),
         ..Default::default()
     };
-    drop(cube);
     let mut cube = Gm::new(Mesh::new(&context, &cube_cpu), PhysicalMaterial::default());
     cube.set_transformation(Mat4::from_translation(vec3(12.0, 4.0, 12.0)) * Mat4::from_scale(4.0));
     cube.set_animation(|time| Mat4::from_angle_y(radians(time)));
